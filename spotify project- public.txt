@@ -1,0 +1,29 @@
+import requests  # this enables us to use the request/response to the API and back
+
+# authorisation to use API (uses OAuth2.0)
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+
+client_id= '' # this needs to be a string, not stored on code for privacy reason
+client_secret = '' # not stored on code for privacy reason
+response_type = 'code'
+redirect_uri = 'https://developer.spotify.com/dashboard/applications'
+
+url = 'https://api.spotify.com/v1'
+
+# login to access
+sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id=client_id,client_secret=client_secret))
+
+# song search based on artist
+artist = input("What artist would you like to see songs from?")
+results = sp.search(q=artist, limit=20)
+
+# provides a numbered list of 20 tracks for artist
+for item, track in enumerate(results['tracks']['items']):
+    my_playlist = item, track['name']
+    print(my_playlist)
+
+# extra ideas if more time:
+##      -Make a playlist from chosen artists
+##      -create playlist from similar artists
+
